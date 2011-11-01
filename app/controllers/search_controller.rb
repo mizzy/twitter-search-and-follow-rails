@@ -26,7 +26,6 @@ class SearchController < ApplicationController
       @page = params[:page] || 1
       @results = search(@query, @page)["results"]
     end
-
   end
 
   private
