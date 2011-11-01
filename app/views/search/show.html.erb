@@ -1,0 +1,58 @@
+<img src="<%= session[:profile_image_url] %>" /> <span class="screen_name"><%= session[:screen_name] %></span>
+
+<form method="get" action="/">
+<input type="text" name="query" value="<%= @query %>" id="query" />
+<input type="submit" value="検索" />
+</form>
+
+<p>
+<% if params[:page].to_i > 1 or params[:page] %>
+<a id="pager" href="/?page=<%= @page.to_i - 1 %>&query=<%= URI.encode(@query) %>">&lt;&lt;前のページ</a>
+<% end %>
+<a id="pager" href="/?page=<%= @page.to_i + 1 %>&query=<%= URI.encode(@query) %>">次のページ&gt;&gt;</a>
+</p>
+
+<a id="select" href="javascript:selectAll()">全選択</a>
+<a id="select" href="javascript:deselectAll()">全解除</a>
+
+<form>
+<input type="button" value="まとめてフォロー" onClick="bulkFollow()" />
+
+<span id="status_top" class="status"></span>
+
+<hr />
+
+<p>
+<% @results.each do |result| %>
+<div name="users" class="users" id="<%= result["unique_id"] %>" onMouseOver="$('#<%= result["unique_id"] %>').css({backgroundColor: '#ffff88'});" onMouseOut="$('#<%= result["unique_id"] %>').css({backgroundColor: 'white'});" onClick="check_input('<%= result["unique_id"] %>');">
+<div id="span_<%= result["unique_id"] %>"></div>
+<input type="checkbox" value="<%= result["from_user"] %>" id="input_<%= result["unique_id"] %>" onClick="check_input('<%= result["unique_id"] %>')" /> 
+<img src="<%= result["profile_image_url"] %>" witdh="48" height="48" />
+<%= result["from_user"] %>
+<%= result["text"] %>
+<br />
+</div>
+<hr />
+<% end %>
+</p>
+
+<input type="button" value="まとめてフォロー" onClick="bulkFollow()" />
+<span id="status_bottom" class="status"></span>
+
+</form>
+
+<p>
+<% if params[:page].to_i > 1 or params[:page] %>
+<a id="pager" href="/?page=<%= @page.to_i - 1 %>&query=<%= URI.encode(@query) %>">&lt;&lt;前のページ</a>
+<% end %>
+<a id="pager" href="/?page=<%= @page.to_i + 1 %>&query=<%= URI.encode(@query) %>">次のページ&gt;&gt;</a>
+</p>
+
+
+<script type="text/javascript">
+$('#query').focus();
+</script>
+
+<div id="copyright">&copy; 宮田</div>
+</body>
+</html>
