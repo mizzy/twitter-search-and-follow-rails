@@ -6,4 +6,8 @@ TwitterSearchAndFollow::Application.routes.draw do
     get 'callback' => :callback
   end
 
+  controller :follow do
+    get 'follow' => :follow
+  end
+
 end

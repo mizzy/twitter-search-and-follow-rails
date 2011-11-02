@@ -62,6 +62,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcache-client (1.8.5)
     mime-types (1.17.2)
     multi_json (1.0.3)
     multi_xml (0.4.1)
@@ -133,6 +134,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.1.0)
   jquery-rails
+  memcache-client
   oauth
   rails (= 3.1.0)
   sass-rails (~> 3.1.0)

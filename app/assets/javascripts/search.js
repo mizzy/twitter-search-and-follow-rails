@@ -2,13 +2,13 @@ var divs = document.getElementsByName('users');
 
 function selectAll() {
     for ( var i = 0; i < divs.length; i++ ) {
-        $('#' + divs[i].id + ' > input').attr({ checked: 1 });
+        $('#' + divs[i].id + ' > input').attr({ checked: true });
     }
 }
 
 function deselectAll() {
     for ( var i = 0; i < divs.length; i++ ) {
-        $('#' + divs[i].id + ' > input').attr({ checked: 0 });
+        $('#' + divs[i].id + ' > input').attr({ checked: false });
     }
 }
 
@@ -18,7 +18,7 @@ function bulkFollow() {
     var divs = document.getElementsByName('users');
     $('#status_top').css({ 'font-weight': 'normal', 'color': '#000000' });
     $('#status_bottom').css({ 'font-weight': 'normal', 'color': '#000000' });
-    var status = '<img src="/img/loading.gif" />フォロー中';
+    var status = '<img src="/assets/loading.gif" />フォロー中';
     $('#status_bottom').html(status);
     $('#status_top').html(status);
     for ( var i = 0; i < divs.length; i++ ) {
@@ -30,10 +30,10 @@ function bulkFollow() {
                       '/follow',
                       {
                           'screen_name': screen_name,
-                              'id':          divs[i].id,
-                              },
+                          'id':      divs[i].id,
+                      },
                       processResult
-                      );
+            );
         }
     }
 }
@@ -77,7 +77,7 @@ function processResult(res) {
 }
 
 var img = new Image();
-img.src = '/img/loading.gif';
+img.src = '/assets/loading.gif';
 
 function check_input(input_id) {
     var input = $('#input_' + input_id);

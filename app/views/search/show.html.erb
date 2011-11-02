@@ -26,7 +26,11 @@
 <% @results.each do |result| %>
 <div name="users" class="users" id="<%= result["unique_id"] %>" onMouseOver="$('#<%= result["unique_id"] %>').css({backgroundColor: '#ffff88'});" onMouseOut="$('#<%= result["unique_id"] %>').css({backgroundColor: 'white'});" onClick="check_input('<%= result["unique_id"] %>');">
 <div id="span_<%= result["unique_id"] %>"></div>
+<% if result["is_following"] %>
+&nbsp;
+<% else %>
 <input type="checkbox" value="<%= result["from_user"] %>" id="input_<%= result["unique_id"] %>" onClick="check_input('<%= result["unique_id"] %>')" /> 
+<% end %>
 <img src="<%= result["profile_image_url"] %>" witdh="48" height="48" />
 <%= result["from_user"] %>
 <%= result["text"] %>

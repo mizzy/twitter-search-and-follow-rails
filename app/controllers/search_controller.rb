@@ -21,11 +21,21 @@ class SearchController < ApplicationController
       session[:screen_name]       = verify["screen_name"]
     end
 
+
+    friend_ids = Twitter.friend_ids()
+
     @query = params[:query] || ''
     @results = []
     if @query != ''
       @page = params[:page] || 1
       @results = search(@query, @page)["results"]
+      @results.each do |result|
+        result["unique_id"] = Digest::MD5.new.update(result["from_user"] + result["created_at"])
+        user = Twitter.user(result["from_user"])
+        if friend_ids["ids"].index(user["id"])
+          result["is_following"] = true
+        end
+      end
     end
   end
 
