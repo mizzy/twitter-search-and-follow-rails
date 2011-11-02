@@ -7,13 +7,13 @@ class AuthController < ApplicationController
     session[:request_token] = request_token.token
     session[:request_token_secret] = request_token.secret
 
-    render text: session[:request_token] + ' ' + session[:request_token_secret]
-    return
-
     redirect_to request_token.authorize_url
   end
 
   def callback
+    render text: session[:request_token] + ' ' + session[:request_token_secret]
+    return
+
     request_token = OAuth::RequestToken.new(
         oauth_consumer,
         session[:request_token],
