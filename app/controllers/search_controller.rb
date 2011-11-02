@@ -31,8 +31,14 @@ class SearchController < ApplicationController
       @results = search(@query, @page)["results"]
       @results.each do |result|
         result["unique_id"] = Digest::MD5.new.update(result["from_user"] + result["created_at"])
-        user = Twitter.user(result["from_user"])
-        if friend_ids["ids"].index(user["id"])
+        id = Rails.cache.fetch(result["from_user"])
+        if not id
+          user = Twitter.user(result["from_user"])
+          id = user["id"]
+          Rails.cache.write(result["from_user"], id)
+        end
+
+        if friend_ids["ids"].index(id)
           result["is_following"] = true
         end
       end

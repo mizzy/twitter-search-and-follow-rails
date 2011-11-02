@@ -27,4 +27,10 @@ TwitterSearchAndFollow::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.cache_store = :dalli_store, {
+    memcache_server: [ ENV['MEMCACHE_SERVERS'] ],
+    username:        ENV['MEMCACHE_USERNAME'],
+    password:        ENV['MEMCACHE_PASSWORD']
+  }
 end
