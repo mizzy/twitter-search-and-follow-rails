@@ -34,4 +34,4 @@ end
 
 gem 'twitter'
 gem 'oauth'
-gem 'memcache-client'
+gem 'dalli'
