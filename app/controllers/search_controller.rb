@@ -5,6 +5,7 @@ class SearchController < ApplicationController
   def show
     if not session[:access_token]
       redirect_to auth_url
+      return
     end
 
     Twitter.configure do |config|
