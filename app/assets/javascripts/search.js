@@ -82,9 +82,10 @@ img.src = '/assets/loading.gif';
 function check_input(input_id) {
     var input = $('#input_' + input_id);
     if ( input.attr('checked') ) {
-        input.attr({ checked: 0});
+        input.attr({ checked: false});
     }
     else {
-        input.attr({ checked: 1});
+        input.attr({ checked: true});
     }
+    return false;
 }

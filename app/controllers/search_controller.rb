@@ -21,7 +21,6 @@ class SearchController < ApplicationController
       session[:screen_name]       = verify["screen_name"]
     end
 
-
     friend_ids = Twitter.friend_ids()
 
     @query = params[:query] || ''
