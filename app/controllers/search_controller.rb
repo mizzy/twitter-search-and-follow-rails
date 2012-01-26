@@ -21,7 +21,15 @@ class SearchController < ApplicationController
       session[:screen_name]       = verify["screen_name"]
     end
 
-    friend_ids = Twitter.friend_ids()
+    friend_ids = []
+    cursor = -1
+    while cursor != 0
+      res = Twitter.friend_ids(cursor: cursor)
+      friend_ids.push(res["ids"].flatten)
+      cursor = res["next_cursor"]
+    end
+
+    friend_ids.flatten!
 
     @query = params[:query] || ''
     @results = []
@@ -37,7 +45,7 @@ class SearchController < ApplicationController
           Rails.cache.write(result["from_user"], id)
         end
 
-        if friend_ids["ids"].index(id)
+        if friend_ids.index(id)
           result["is_following"] = true
         end
       end
