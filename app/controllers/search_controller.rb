@@ -25,38 +25,35 @@ class SearchController < ApplicationController
     cursor = -1
     while cursor != 0
       res = Twitter.friend_ids(cursor: cursor)
-      friend_ids.push(res["ids"].flatten)
-      cursor = res["next_cursor"]
+      friend_ids.push(res.ids.flatten)
+      cursor = res.next_cursor
     end
 
     friend_ids.flatten!
-
-    @query = params[:query] || ''
     @results = []
+    @query = params[:query] || ''
     if @query != ''
       @page = params[:page] || 1
-      @results = search(@query, @page)["results"]
-      @results.each do |result|
-        result["unique_id"] = Digest::MD5.new.update(result["from_user"] + result["created_at"])
-        id = Rails.cache.fetch(result["from_user"])
+      Twitter.search(@query).results.each do |result|
+        @res = {}
+        @res["unique_id"] = Digest::MD5.new.update(result.from_user + result.created_at.to_s)
+        id = Rails.cache.fetch(result.from_user)
         if not id
-          user = Twitter.user(result["from_user"])
-          id = user["id"]
-          Rails.cache.write(result["from_user"], id)
+          user = Twitter.user(result.from_user)
+          id = user.id
+          Rails.cache.write(result.from_user, id)
         end
 
         if friend_ids.index(id)
-          result["is_following"] = true
+          @res["is_following"] = true
         end
+
+        @res["from_user"] = result.from_user
+        @res["profile_image_url"] = result.profile_image_url
+        @res["text"] = result.text
+
+        @results << @res
       end
     end
-  end
-
-  private
-  def search(query, page=1, rpp=50)
-    url = 'http://search.twitter.com/search.json'
-    url = sprintf("%s?q=%s&page=%s&rpp=%s", url, URI.encode(query), page, rpp)
-    json = open(url).read
-    MultiJson.decode(json)
   end
 end
