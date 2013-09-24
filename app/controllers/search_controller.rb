@@ -33,8 +33,10 @@ class SearchController < ApplicationController
     @results = []
     @query = params[:query] || ''
     if @query != ''
-      @page = params[:page] || 1
-      Twitter.search(@query).results.each do |result|
+      options = {}
+      options = { max_id: params[:max_id] } if params[:max_id]
+      res = Twitter.search(@query, options)
+      res.results.each do |result|
         @res = {}
         @res["unique_id"] = Digest::MD5.new.update(result.from_user + result.created_at.to_s)
         id = Rails.cache.fetch(result.from_user)
@@ -53,6 +55,7 @@ class SearchController < ApplicationController
         @res["text"] = result.text
 
         @results << @res
+        @max_id = result.id
       end
     end
   end

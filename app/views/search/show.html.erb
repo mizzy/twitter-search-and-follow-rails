@@ -7,9 +7,9 @@
 
 <p>
 <% if params[:page].to_i > 1 or params[:page] %>
-<a id="pager" href="/?page=<%= @page.to_i - 1 %>&query=<%= URI.encode(@query) %>">&lt;&lt;前のページ</a>
+<a id="pager" href="/?max_id=<%= @prev_max_id %>&query=<%= URI.encode(@query) %>">&lt;&lt;前のページ</a>
 <% end %>
-<a id="pager" href="/?page=<%= @page.to_i + 1 %>&query=<%= URI.encode(@query) %>">次のページ&gt;&gt;</a>
+<a id="pager" href="/?max_id=<%= @max_id - 1 %>&query=<%= URI.encode(@query) %>">次のページ&gt;&gt;</a>
 </p>
 
 <a id="select" href="javascript:selectAll()">全選択</a>
@@ -47,9 +47,9 @@
 
 <p>
 <% if params[:page].to_i > 1 or params[:page] %>
-<a id="pager" href="/?page=<%= @page.to_i - 1 %>&query=<%= URI.encode(@query) %>">&lt;&lt;前のページ</a>
+<a id="pager" href="/?max_id=<%= @prev_max_id %>&query=<%= URI.encode(@query) %>">&lt;&lt;前のページ</a>
 <% end %>
-<a id="pager" href="/?page=<%= @page.to_i + 1 %>&query=<%= URI.encode(@query) %>">次のページ&gt;&gt;</a>
+<a id="pager" href="/?max_id=<%= @max_id - 1 %>&query=<%= URI.encode(@query) %>">次のページ&gt;&gt;</a>
 </p>
 
 
