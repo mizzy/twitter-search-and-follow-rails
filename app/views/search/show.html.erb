@@ -5,9 +5,11 @@
 <input type="submit" value="検索" />
 </form>
 
+<% if @max_id %>
 <p>
 <a id="pager" href="/?max_id=<%= @max_id - 1 %>&query=<%= URI.encode(@query) %>">次のページ&gt;&gt;</a>
 </p>
+<% end %>
 
 <a id="select" href="javascript:selectAll()">全選択</a>
 <a id="select" href="javascript:deselectAll()">全解除</a>
@@ -42,10 +44,11 @@
 
 </form>
 
+<% if @max_id %>
 <p>
 <a id="pager" href="/?max_id=<%= @max_id - 1 %>&query=<%= URI.encode(@query) %>">次のページ&gt;&gt;</a>
 </p>
-
+<% end %>
 
 <script type="text/javascript">
 $('#query').focus();
